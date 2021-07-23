@@ -44,7 +44,9 @@ const Header = (props) => {
         <Link className="home" to="/">
           Home
         </Link>
-        <HeaderCartButton />
+        <Link id="order-pizza" className="home" to="/pizza">
+          <HeaderCartButton />
+        </Link>
       </header>
       <div>
         <img src="../../Assets/Pizza.jpg" alt="delicous food"></img>

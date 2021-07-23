@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div>
       <h1>Delicious Pizza</h1>
-      <img src="../../Assets/Pizza.jpg" />
+      <img className="home-image" src="../../Assets/Pizza.jpg" alt="" />
     </div>
   );
 }

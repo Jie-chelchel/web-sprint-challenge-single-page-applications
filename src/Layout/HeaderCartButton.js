@@ -3,14 +3,12 @@ import styled from "styled-components";
 
 const ButtonStyle = styled.button`
   border: none;
-  padding: 0.5rem 2rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-radius: 25px;
   font-weight: bold;
-  position: fixed;
-  right: 25%;
+
   & .icon {
     width: 1.35rem;
     height: 1.35rem;
