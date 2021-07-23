@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { reach } from "yup";
+import schema from "./YupValidation";
 
 const FormStyle = styled.div`
   width: 70%;
@@ -59,8 +61,8 @@ const FormStyle = styled.div`
 `;
 
 const OrderForm = (props) => {
-  const initailForm = {
-    name: "",
+  const initialForm = {
+    pizzaName: "",
     size: "",
     pepperoni: false,
     ham: false,
@@ -70,10 +72,26 @@ const OrderForm = (props) => {
     special_instruction: "",
   };
 
-  const [form, setForm] = useState(initailForm);
+  const [form, setForm] = useState(initialForm);
+  const [formErrors, setFormErrors] = useState({
+    pizzaName: "",
+    size: "",
+  });
+  const [disabled, setDisabled] = useState(true);
+  const validate = (name, value) => {
+    reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]: "" }))
+      .catch((err) => {
+        setFormErrors({ ...formErrors, [name]: err.errors[0] });
+      });
+  };
+
   const changeHandler = (e) => {
     const { name, type, value, checked } = e.target;
-    const valueToUse = type === checked ? checked : value;
+    const valueToUse = type === "checkbox" ? checked : value;
+    validate(name, valueToUse);
+
     setForm({ ...form, [name]: valueToUse });
     console.log(form);
   };
@@ -81,22 +99,27 @@ const OrderForm = (props) => {
   const submitOrder = (e) => {
     e.preventDefault();
     props.onSubmitOrder(form);
-    setForm(initailForm);
+    setForm(initialForm);
   };
-
+  useEffect(() => {
+    schema.isValid(form).then((valid) => setDisabled(!valid), [form]);
+  });
   return (
     <FormStyle>
       <h3>Build Your Own Pizza</h3>
       <form id="pizza-form" onSubmit={submitOrder}></form>
-      <label className="label" htmlFor="name">
-        Please Enter Your Name:
+      <label className="label" htmlFor="pizzaName">
+        Please Enter the Pizza Name:
         <input
-          name="name"
+          name="pizzaName"
           type="text"
           onChange={changeHandler}
-          value={form.name}
+          value={form.pizzaName}
         />
       </label>
+      {formErrors.pizzaName.length > 0 && (
+        <p className="alert">{formErrors.pizzaName}</p>
+      )}
       <label className="label" htmlFor="size">
         Choice of Size:
         <select name="size" onChange={changeHandler} value={form.size}>
@@ -107,6 +130,7 @@ const OrderForm = (props) => {
           <option value="xl">Extra Large(12 slices)</option>
         </select>
       </label>
+      {formErrors.size.length > 0 && <p className="alert">{formErrors.size}</p>}
       <h4>Choice of Toppings </h4>
       <ul className="toppings">
         <li>
@@ -116,7 +140,7 @@ const OrderForm = (props) => {
             type="checkbox"
             onChange={changeHandler}
             checked={form.pepperoni}
-          ></input>
+          />
         </li>
         <li>
           Ham
@@ -125,7 +149,7 @@ const OrderForm = (props) => {
             type="checkbox"
             onChange={changeHandler}
             checked={form.ham}
-          ></input>
+          />
         </li>
         <li>
           Ground Beef
@@ -134,7 +158,7 @@ const OrderForm = (props) => {
             type="checkbox"
             onChange={changeHandler}
             checked={form.ground_beef}
-          ></input>
+          />
         </li>
 
         <li>
@@ -144,7 +168,7 @@ const OrderForm = (props) => {
             type="checkbox"
             onChange={changeHandler}
             checked={form.Jalapenos}
-          ></input>
+          />
         </li>
         <li>
           Tomatoes
@@ -153,7 +177,7 @@ const OrderForm = (props) => {
             type="checkbox"
             onChange={changeHandler}
             checked={form.tomatoes}
-          ></input>
+          />
         </li>
       </ul>
       <label className="label" htmlFor="name" htmlFor="specical instruction">
@@ -167,8 +191,8 @@ const OrderForm = (props) => {
           value={form.special_instruction}
         />
       </label>
-      <button id="order-button" onClick={submitOrder}>
-        Add to Order{" "}
+      <button id="order-button" onClick={submitOrder} disabled={disabled}>
+        Add to Order
       </button>
     </FormStyle>
   );
