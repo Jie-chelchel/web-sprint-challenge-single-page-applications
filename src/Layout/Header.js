@@ -49,7 +49,7 @@ const Header = (props) => {
         </Link>
       </header>
       <div>
-        <img src="../../Assets/Pizza.jpg" alt="delicous food"></img>
+        <img src="../../Assets/Pizza.jpg" alt="pizza "></img>
       </div>
     </HeaderStyle>
   );

@@ -121,6 +121,7 @@ const OrderForm = (props) => {
       <label className="label" htmlFor="pizzaName">
         Please Enter the Pizza Name:
         <input
+          id="name-input"
           name="pizzaName"
           type="text"
           onChange={changeHandler}
@@ -132,7 +133,12 @@ const OrderForm = (props) => {
       )}
       <label className="label" htmlFor="size">
         Choice of Size:
-        <select name="size" onChange={changeHandler} value={form.size}>
+        <select
+          name="size"
+          onChange={changeHandler}
+          value={form.size}
+          id="size-dropdown"
+        >
           <option value="">- Select a size -</option>
           <option value="sm">Small(6 slices)</option>
           <option value="md">Medium(8 slices)</option>

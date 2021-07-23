@@ -6,7 +6,7 @@ import Header from "./Layout/Header";
 import axios from "axios";
 import ThankYouForYourOrder from "./components/ThankYouForYourOrder";
 const App = () => {
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState({});
 
   const sumbitOrderHandler = (form) => {
     const newOrder = {
@@ -23,7 +23,7 @@ const App = () => {
       .post("https://reqres.in/api/orders", newOrder)
       .then((res) => {
         console.log(res.data);
-        setOrder([...order, res.data]);
+        setOrder(res.data);
       })
       .catch((err) => console.log(err));
   };
