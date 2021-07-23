@@ -32,6 +32,9 @@ const ThankYouForYourOrder = (props) => {
         {order.tomatoes ? "tomatoes, " : ""}
         {order.pepperoni ? "pepperoni " : ""}
       </p>
+      {order.special_instruction
+        ? `Special Instruction: ${order.special_instruction}`
+        : ""}
     </OrderSummaryStyle>
   );
 };
