@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const FormStyle = styled.div`
@@ -58,17 +59,47 @@ const FormStyle = styled.div`
 `;
 
 const OrderForm = (props) => {
+  const initailForm = {
+    name: "",
+    size: "",
+    pepperoni: false,
+    ham: false,
+    ground_beef: false,
+    Jalapenos: false,
+    tomatoes: false,
+    special_instruction: "",
+  };
+
+  const [form, setForm] = useState(initailForm);
+  const changeHandler = (e) => {
+    const { name, type, value, checked } = e.target;
+    const valueToUse = type === checked ? checked : value;
+    setForm({ ...form, [name]: valueToUse });
+    console.log(form);
+  };
+
+  const submitOrder = (e) => {
+    e.preventDefault();
+    props.onSubmitOrder(form);
+    setForm(initailForm);
+  };
+
   return (
     <FormStyle>
       <h3>Build Your Own Pizza</h3>
-      <form id="pizza-form"></form>
+      <form id="pizza-form" onSubmit={submitOrder}></form>
       <label className="label" htmlFor="name">
         Please Enter Your Name:
-        <input name="name" type="text" />
+        <input
+          name="name"
+          type="text"
+          onChange={changeHandler}
+          value={form.name}
+        />
       </label>
       <label className="label" htmlFor="size">
         Choice of Size:
-        <select name="size">
+        <select name="size" onChange={changeHandler} value={form.size}>
           <option value="">- Select a size -</option>
           <option value="sm">Small(6 slices)</option>
           <option value="md">Medium(8 slices)</option>
@@ -80,54 +111,65 @@ const OrderForm = (props) => {
       <ul className="toppings">
         <li>
           Pepperoni
-          <input type="checkbox"></input>
+          <input
+            name="pepperoni"
+            type="checkbox"
+            onChange={changeHandler}
+            checked={form.pepperoni}
+          ></input>
         </li>
         <li>
           Ham
-          <input type="checkbox"></input>
+          <input
+            name="ham"
+            type="checkbox"
+            onChange={changeHandler}
+            checked={form.ham}
+          ></input>
         </li>
         <li>
           Ground Beef
-          <input type="checkbox"></input>
+          <input
+            name="ground_beef"
+            type="checkbox"
+            onChange={changeHandler}
+            checked={form.ground_beef}
+          ></input>
         </li>
-        <li>
-          Ham
-          <input type="checkbox"></input>
-        </li>
-        <li>
-          Meatballs
-          <input type="checkbox"></input>
-        </li>
-        <li>
-          Mushrooms
-          <input type="checkbox"></input>
-        </li>
-        <li>
-          Spinach
-          <input type="checkbox"></input>
-        </li>
+
         <li>
           Jalapenos
-          <input type="checkbox"></input>
+          <input
+            name="Jalapenos"
+            type="checkbox"
+            onChange={changeHandler}
+            checked={form.Jalapenos}
+          ></input>
         </li>
         <li>
           Tomatoes
-          <input type="checkbox"></input>
-        </li>
-        <li>
-          Onions
-          <input type="checkbox"></input>
+          <input
+            name="tomatoes"
+            type="checkbox"
+            onChange={changeHandler}
+            checked={form.tomatoes}
+          ></input>
         </li>
       </ul>
       <label className="label" htmlFor="name" htmlFor="specical instruction">
         Special Instructions
         <input
-          name="name"
+          name="special_instruction"
+          id="special-text"
           type="text"
+          onChange={changeHandler}
           placeholder="Anything else you'd like to add?"
+          value={form.special_instruction}
         />
       </label>
-      <button id="order-button">Add to Order</button>
+      <button id="order-button" onClick={submitOrder}>
+        Add to Order{" "}
+      </button>
     </FormStyle>
   );
 };
