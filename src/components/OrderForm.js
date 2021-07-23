@@ -206,9 +206,6 @@ const OrderForm = (props) => {
         {disabled && <p>Add to Order</p>}
         {!disabled && <Link to="/order">Add to Order</Link>}
       </button>
-      <Route path="/order">
-        <ThankYouForYourOrder form={form} />
-      </Route>
     </FormStyle>
   );
 };
