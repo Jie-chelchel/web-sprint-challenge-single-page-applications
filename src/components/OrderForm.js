@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { reach } from "yup";
 import schema from "./YupValidation";
-
+import { Link } from "react-router-dom";
+import ThankYouForYourOrder from "./ThankYouForYourOrder";
+import { Route } from "react-router-dom";
 const FormStyle = styled.div`
   width: 70%;
   background: white;
@@ -47,16 +49,24 @@ const FormStyle = styled.div`
 
   #order-button {
     font: inherit;
+    color: white;
+
     border: 1px solid #4f005f;
     background: #4f005f;
     border-radius: 5px;
-    color: white;
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
+  }
+  & p {
+    margin: 0;
   }
   #order-button:hover {
     background: #741188;
     border-color: #741188;
+  }
+  & a {
+    color: white;
+    text-decoration: none;
   }
 `;
 
@@ -191,9 +201,14 @@ const OrderForm = (props) => {
           value={form.special_instruction}
         />
       </label>
-      <button id="order-button" onClick={submitOrder} disabled={disabled}>
-        Add to Order
+
+      <button id="order-button" disabled={disabled} onClick={submitOrder}>
+        {disabled && <p>Add to Order</p>}
+        {!disabled && <Link to="/order">Add to Order</Link>}
       </button>
+      <Route path="/order">
+        <ThankYouForYourOrder form={form} />
+      </Route>
     </FormStyle>
   );
 };

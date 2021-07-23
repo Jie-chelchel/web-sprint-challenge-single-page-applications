@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import OrderForm from "./components/OrderForm";
 import Header from "./Layout/Header";
 import axios from "axios";
-
+import ThankYouForYourOrder from "./components/ThankYouForYourOrder";
 const App = () => {
   const [order, setOrder] = useState([]);
 
@@ -36,8 +36,11 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/pizza">
+        <Route path="/pizza" exact>
           <OrderForm onSubmitOrder={sumbitOrderHandler} />
+        </Route>
+        <Route path="/order">
+          <ThankYouForYourOrder order={order} />
         </Route>
       </Switch>
     </>

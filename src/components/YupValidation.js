@@ -5,7 +5,7 @@ const YupValidation = yup.object().shape({
     .string()
     .trim()
     .required("Name is required")
-    .min(2, "Name must be at least 2 characters long"),
+    .min(2, "name must be at least 2 characters"),
   size: yup.string().oneOf(["sm", "md", "lg", "xl"], "You must select a size"),
   pepperoni: yup.boolean().oneOf([true, false]),
   ham: yup.boolean().oneOf([true, false]),
