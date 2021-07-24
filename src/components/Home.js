@@ -27,6 +27,9 @@ const HomeStyle = styled.div`
     padding: 1rem 2rem;
     cursor: pointer;
   }
+  @media (max-width: 550px) {
+    flex-direction: column;
+  }
 `;
 
 export default function Home() {

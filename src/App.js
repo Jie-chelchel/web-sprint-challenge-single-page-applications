@@ -10,7 +10,7 @@ const App = () => {
 
   const sumbitOrderHandler = (form) => {
     const newOrder = {
-      Pizza_name: form.pizzaName.trim(),
+      pizzaName: form.pizzaName.trim(),
       size: form.size,
       pepperoni: form.pepperoni,
       ham: form.ham,

@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { reach } from "yup";
 import schema from "./YupValidation";
 import { Link } from "react-router-dom";
-import ThankYouForYourOrder from "./ThankYouForYourOrder";
-import { Route } from "react-router-dom";
 const FormStyle = styled.div`
   width: 70%;
   background: white;
@@ -196,7 +194,7 @@ const OrderForm = (props) => {
           />
         </li>
       </ul>
-      <label className="label" htmlFor="name" htmlFor="specical instruction">
+      <label className="label" htmlFor="name">
         Special Instructions
         <input
           name="special_instruction"
